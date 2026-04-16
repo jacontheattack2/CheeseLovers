@@ -22,8 +22,17 @@ async function listZones() {
       let shajson;
       let sha;
         try {
-          sharesponse = await fetch("https://api.github.com/repos/gn-math/assets/commits?t="+Date.now());
-        } catch (error) {}
+  sharesponse = await fetch("https://api.github.com/repos/gn-math/assets/commits?t="+Date.now(), {
+    headers: {
+        // You can generate this in your GitHub Settings > Developer Settings
+        "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"
+    }
+  });
+  const data = await sharesponse.json();
+  const latestSha = data[0].sha; // This is your "Key"
+} catch (error) {
+  console.log("Still failing? Use a proxy or jsDelivr instead.");
+}
         if (sharesponse && sharesponse.status === 200) {
           try {
             shajson = await sharesponse.json();
